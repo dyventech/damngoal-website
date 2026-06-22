@@ -26,9 +26,6 @@ const {
 const ogImage = image.startsWith('http') ? image : new URL(image, Astro.site).href;
 const canonical = canonicalURL.href;
 
-if (!landing) {
-	await import('../styles/global.css');
-}
 ---
 
 <meta charset="utf-8" />
