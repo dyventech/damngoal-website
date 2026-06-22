@@ -29,7 +29,7 @@
 	--font-body: var(--font-family);
 	--max-width: 1120px;
 	--section-gap: clamp(5rem, 12vw, 8rem);
-	--soft-band: #ebe8ff;
+	--soft-band: #d9d6ff;
 	--ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -171,16 +171,20 @@ body.landing::before {
 	font-weight: 600;
 	text-decoration: none;
 	color: var(--brand);
-	background: linear-gradient(180deg, #2eeaff 0%, var(--accent) 100%);
-	border: 1px solid rgba(255, 255, 255, 0.35);
+	background: var(--accent);
+	border: 1px solid rgba(24, 35, 63, 0.08);
 	border-radius: var(--radius-full);
-	box-shadow: 0 2px 12px rgba(34, 211, 238, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-	transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+	box-shadow: 0 2px 10px rgba(34, 211, 238, 0.22);
+	transition:
+		background-color 0.2s var(--ease-out),
+		transform 0.2s var(--ease-out),
+		box-shadow 0.2s var(--ease-out);
 }
 
 .landing-header__cta:hover {
+	background: var(--accent-secondary);
 	transform: translateY(-1px);
-	box-shadow: 0 4px 20px rgba(34, 211, 238, 0.4);
+	box-shadow: 0 4px 16px rgba(91, 192, 255, 0.28);
 }
 
 .landing-header__cta:focus-visible {
@@ -294,12 +298,7 @@ body.landing::before {
 
 .hero__title .accent {
 	display: block;
-	background: linear-gradient(
-		120deg,
-		var(--accent) 0%,
-		var(--accent-secondary) 45%,
-		#7dd3fc 100%
-	);
+	background: linear-gradient(120deg, var(--accent) 0%, var(--accent-secondary) 100%);
 	-webkit-background-clip: text;
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
@@ -425,20 +424,22 @@ body.landing::before {
 	font-size: 0.9375rem;
 	font-weight: 600;
 	color: var(--brand);
-	background: linear-gradient(180deg, #2eeaff 0%, var(--accent) 100%);
-	border: 1px solid rgba(255, 255, 255, 0.35);
+	background: var(--accent);
+	border: 1px solid rgba(24, 35, 63, 0.08);
 	border-radius: var(--radius-full);
-	box-shadow: 0 2px 12px rgba(34, 211, 238, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+	box-shadow: 0 2px 10px rgba(34, 211, 238, 0.22);
 	cursor: pointer;
 	transition:
+		background-color 0.2s var(--ease-out),
 		transform 0.2s var(--ease-out),
 		box-shadow 0.2s var(--ease-out),
 		opacity 0.2s ease;
 }
 
 .waitlist-form__submit:hover:not(:disabled) {
+	background: var(--accent-secondary);
 	transform: translateY(-1px);
-	box-shadow: 0 4px 20px rgba(34, 211, 238, 0.4);
+	box-shadow: 0 4px 16px rgba(91, 192, 255, 0.28);
 }
 
 .waitlist-form__submit:focus-visible {
@@ -757,7 +758,7 @@ body.landing::before {
 }
 
 .journey__step--lavender .journey__node-inner {
-	border-color: #a89cf5;
+	border-color: var(--soft);
 	box-shadow: 0 0 0 6px rgba(217, 214, 255, 0.5);
 }
 
@@ -795,7 +796,7 @@ body.landing::before {
 }
 
 .journey__step--lavender .journey__card {
-	border-left: 3px solid #a89cf5;
+	border-left: 3px solid var(--soft);
 }
 
 .journey__step--cyan .journey__card {
@@ -933,7 +934,7 @@ body.landing::before {
 	width: 100%;
 	min-width: 0;
 	padding: clamp(2.5rem, 6vw, 3.5rem);
-	background: linear-gradient(145deg, #1e2d4f 0%, var(--brand) 40%, #121b30 100%);
+	background: var(--brand);
 	color: var(--white);
 	border-radius: var(--radius-xl);
 	border: 1px solid rgba(255, 255, 255, 0.08);
