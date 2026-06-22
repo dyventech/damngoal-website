@@ -9,23 +9,7 @@ const currentPath = Astro.url.pathname;
 			<span>Damn<span class="accent">Goal</span></span>
 		</a>
 
-		<button
-			type="button"
-			class="landing-header__menu-btn"
-			aria-expanded="false"
-			aria-controls="landing-nav"
-			data-menu-toggle
-		>
-			<span class="sr-only">Open menu</span>
-			<span class="landing-header__menu-icon" aria-hidden="true"></span>
-		</button>
-
-		<nav
-			id="landing-nav"
-			class="landing-header__nav"
-			aria-label="Main"
-			data-menu-panel
-		>
+		<nav class="landing-header__nav" aria-label="Main">
 			<a
 				href="/research"
 				class:list={['landing-header__link', { 'is-active': currentPath === '/research' }]}
@@ -36,104 +20,7 @@ const currentPath = Astro.url.pathname;
 	</div>
 </header>
 
-<script>
-	const header = document.querySelector('.landing-header');
-	const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
-	const panel = document.querySelector<HTMLElement>('[data-menu-panel]');
-
-	if (header && toggle && panel) {
-		const closeMenu = () => {
-			header.classList.remove('is-menu-open');
-			toggle.setAttribute('aria-expanded', 'false');
-		};
-
-		toggle.addEventListener('click', () => {
-			const isOpen = header.classList.toggle('is-menu-open');
-			toggle.setAttribute('aria-expanded', String(isOpen));
-		});
-
-		panel.querySelectorAll('a').forEach((link) => {
-			link.addEventListener('click', closeMenu);
-		});
-
-		document.addEventListener('keydown', (e) => {
-			if (e.key === 'Escape') closeMenu();
-		});
-
-		window.matchMedia('(min-width: 641px)').addEventListener('change', (e) => {
-			if (e.matches) closeMenu();
-		});
-	}
-</script>
-
 <style>
-	.landing-header__menu-btn {
-		display: none;
-		align-items: center;
-		justify-content: center;
-		width: 40px;
-		height: 40px;
-		padding: 0;
-		background: rgba(217, 214, 255, 0.35);
-		border: 1px solid var(--border-subtle);
-		border-radius: var(--radius-full);
-		cursor: pointer;
-		transition: background 0.2s var(--ease-out);
-	}
-
-	.landing-header__menu-btn:hover {
-		background: rgba(217, 214, 255, 0.55);
-	}
-
-	.landing-header__menu-btn:focus-visible {
-		outline: 2px solid var(--accent);
-		outline-offset: 2px;
-	}
-
-	.landing-header__menu-icon,
-	.landing-header__menu-icon::before,
-	.landing-header__menu-icon::after {
-		display: block;
-		width: 18px;
-		height: 2px;
-		background: var(--brand);
-		border-radius: 2px;
-		transition: transform 0.25s var(--ease-out), opacity 0.2s ease;
-	}
-
-	.landing-header__menu-icon {
-		position: relative;
-	}
-
-	.landing-header__menu-icon::before,
-	.landing-header__menu-icon::after {
-		content: "";
-		position: absolute;
-		left: 0;
-	}
-
-	.landing-header__menu-icon::before {
-		top: -6px;
-	}
-
-	.landing-header__menu-icon::after {
-		top: 6px;
-	}
-
-	.landing-header.is-menu-open .landing-header__menu-icon {
-		background: transparent;
-	}
-
-	.landing-header.is-menu-open .landing-header__menu-icon::before {
-		top: 0;
-		transform: rotate(45deg);
-	}
-
-	.landing-header.is-menu-open .landing-header__menu-icon::after {
-		top: 0;
-		transform: rotate(-45deg);
-	}
-
 	.landing-header__nav {
 		display: flex;
 		align-items: center;
@@ -164,54 +51,5 @@ const currentPath = Astro.url.pathname;
 	.landing-header__link:focus-visible {
 		outline: 2px solid var(--accent);
 		outline-offset: 2px;
-	}
-
-	.sr-only {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		padding: 0;
-		margin: -1px;
-		overflow: hidden;
-		clip: rect(0, 0, 0, 0);
-		white-space: nowrap;
-		border: 0;
-	}
-
-	@media (max-width: 640px) {
-		.landing-header__inner {
-			position: relative;
-			flex-wrap: wrap;
-		}
-
-		.landing-header__menu-btn {
-			display: inline-flex;
-			margin-left: auto;
-		}
-
-		.landing-header__nav {
-			display: none;
-			flex-direction: column;
-			align-items: stretch;
-			gap: 0.375rem;
-			width: 100%;
-			margin-top: 0.5rem;
-			padding: 0.5rem;
-			background: var(--surface-strong);
-			border: 1px solid var(--border-subtle);
-			border-radius: var(--radius-md);
-			box-shadow: var(--shadow-soft);
-		}
-
-		.landing-header.is-menu-open .landing-header__nav {
-			display: flex;
-		}
-
-		.landing-header__link {
-			display: flex;
-			width: 100%;
-			justify-content: center;
-			text-align: center;
-		}
 	}
 </style>
