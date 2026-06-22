@@ -1,0 +1,158 @@
+---
+import LandingLayout from '../layouts/Landing.astro';
+import LandingHeader from '../components/landing/LandingHeader.astro';
+import LandingFooter from '../components/landing/LandingFooter.astro';
+import WaitlistForm from '../components/landing/WaitlistForm.astro';
+import {
+	researchFindings,
+	researchSupported,
+	researchWeak,
+	researchCitations,
+} from '../data/research';
+import { SITE_TITLE } from '../consts';
+import { buildWebPageSchema, siteOrganization } from '../lib/seo';
+
+export const prerender = true;
+
+const pageTitle = `Research — ${SITE_TITLE}`;
+const pageDescription =
+	"How behavior-change research informs DamnGoal — what the evidence supports, what it doesn't, and where we're honest about the limits.";
+
+const jsonLd = [
+	siteOrganization,
+	buildWebPageSchema({
+		title: pageTitle,
+		description: pageDescription,
+		path: '/research',
+	}),
+];
+---
+
+<LandingLayout title={pageTitle} description={pageDescription} jsonLd={jsonLd}>
+	<LandingHeader />
+
+	<main class="landing-main research-page">
+		<section class="research-hero">
+			<div class="landing-container research-hero__copy">
+				<p class="section-eyebrow">Evidence & design</p>
+				<h1 class="research-hero__title">Science in the kitchen, not on the menu</h1>
+				<p class="research-hero__lede">
+					DamnGoal is informed by behavior-change research — goal adjustment, self-compassion,
+					just-in-time support, and more. You feel it in the product. This page is for people who
+					want to see what's underneath.
+				</p>
+				<p class="research-hero__note">
+					No published study validates a complete product like DamnGoal. Research guides our
+					direction; it doesn't prove every feature. We're transparent about that.
+				</p>
+			</div>
+		</section>
+
+		<section class="research-section reveal" aria-labelledby="findings-heading">
+			<div class="landing-container">
+				<h2 class="research-section__title" id="findings-heading">What the research says</h2>
+				<p class="research-section__intro">
+					There's no single study explaining why personal goals stall. The useful picture comes from
+					surveys, longitudinal goal research, and recent behavior-change work — much of it from
+					health contexts, applied here with care.
+				</p>
+				<div class="research-findings">
+					{researchFindings.map((finding) => (
+						<article class="research-finding">
+							<h3 class="research-finding__title">{finding.title}</h3>
+							<p class="research-finding__summary">{finding.summary}</p>
+							{finding.href ? (
+								<a
+									class="research-finding__source"
+									href={finding.href}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									{finding.source} ↗
+								</a>
+							) : (
+								<p class="research-finding__source">{finding.source}</p>
+							)}
+						</article>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section class="research-verdict reveal" aria-labelledby="verdict-heading">
+			<div class="landing-container research-verdict__grid">
+				<div class="research-verdict__col">
+					<h2 class="research-verdict__title" id="verdict-heading">What we build on</h2>
+					<ul class="research-verdict__list research-verdict__list--yes">
+						{researchSupported.map((item) => (
+							<li>{item}</li>
+						))}
+					</ul>
+				</div>
+				<div class="research-verdict__col">
+					<h2 class="research-verdict__title">What the evidence doesn't support</h2>
+					<ul class="research-verdict__list research-verdict__list--no">
+						{researchWeak.map((item) => (
+							<li>{item}</li>
+						))}
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<section class="research-limits" aria-labelledby="limits-heading">
+			<div class="landing-container">
+				<h2 class="research-section__title" id="limits-heading">Honest limits</h2>
+				<div class="research-limits__card">
+					<p>
+						Much of this literature comes from health domains — exercise, diet, adherence. Applying
+						it to career, creative, or relationship goals is reasonable but not directly validated.
+					</p>
+					<p>
+						Most studies measure short-to-medium-term behavior, not whether someone maintains a
+						meaningful relationship with a long-term personal goal over years.
+					</p>
+					<p>
+						Survey data describes what people report — not always what they do day to day. DamnGoal's
+						specific UX choices are design decisions informed by research, not proven by it.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="cta-section reveal" aria-labelledby="research-cta-heading">
+			<div class="landing-container">
+				<div class="cta-section__card">
+					<div class="cta-section__lantern" aria-hidden="true">
+						<img src="/damngoal-logo.jpeg" alt="" width="64" height="64" />
+					</div>
+					<div class="cta-section__content">
+						<h2 class="cta-section__title" id="research-cta-heading">Want early access?</h2>
+						<p class="cta-section__desc">
+							We're building a goal app that respects what the research says — and what it doesn't.
+							Join the waitlist.
+						</p>
+						<WaitlistForm id="research-waitlist-bottom" variant="dark" />
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="research-citations" aria-labelledby="citations-heading">
+			<div class="landing-container">
+				<h2 class="research-citations__title" id="citations-heading">References</h2>
+				<ul class="research-citations__list">
+					{researchCitations.map((cite) => (
+						<li>
+							<a href={cite.href} target="_blank" rel="noopener noreferrer">
+								{cite.label}
+							</a>
+						</li>
+					))}
+				</ul>
+			</div>
+		</section>
+	</main>
+
+	<LandingFooter />
+</LandingLayout>

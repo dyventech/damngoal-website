@@ -1,0 +1,47 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import '../styles/landing.css';
+
+interface Props {
+	title: string;
+	description: string;
+	image?: string;
+	jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { title, description, image = '/damngoal-logo.jpeg', jsonLd } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={title}
+			description={description}
+			image={image}
+			landing={true}
+			jsonLd={jsonLd}
+		/>
+	</head>
+	<body class="landing">
+		<slot />
+		<script>
+			if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+				const observer = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								entry.target.classList.add('is-visible');
+								observer.unobserve(entry.target);
+							}
+						});
+					},
+					{ threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
+				);
+				document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+			} else {
+				document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
+			}
+		</script>
+	</body>
+</html>

@@ -2,7 +2,7 @@
 	"name": "damngoal-website",
 	"compatibility_date": "2025-10-08",
 	"compatibility_flags": ["nodejs_compat"],
-	"main": "./dist/_worker.js/index.js",
+	"main": "@astrojs/cloudflare/entrypoints/server",
 	"assets": {
 		"directory": "./dist",
 		"binding": "ASSETS"
@@ -10,5 +10,9 @@
 	"observability": {
 		"enabled": true
 	},
-	"upload_source_maps": true
+	"upload_source_maps": true,
+	"vars": {
+		"BREVO_FORM_ACTION": "https://11d4d5e0.sibforms.com/serve/MUIFAAM-Ex6VG8p8WfkNEw8A2hvPrckJQzI_JTKKEGTNVNhQl95hmd0t_xTGdNoU9uTw0j3WORmNI_D9Snx-m88g7Wh_DzXRnh2daej3glPZiJMlqMjNWsAPFxYokC4GkkFSmyznkGGqJKYaPadC3TW7SJFXIRxbw_JjYQgtno_J3WOukjMJ_ADbjvlynhKhw54dQCC2nWZ5N1pINw==",
+		"PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAADo8sU8ZFo0h8Z4p"
+	}
 }

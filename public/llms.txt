@@ -1,0 +1,30 @@
+# DamnGoal
+
+> Goals, habits, and next steps that adapt when life does. Keep the dream. Bend the plan.
+
+DamnGoal is a calm, emotionally intelligent goal-tracking app (coming soon). No streaks, no guilt, no forced cheerleading. Research-informed design.
+
+## Pages
+
+- Home: https://damngoal.app/
+- Research & evidence: https://damngoal.app/research
+
+## What DamnGoal is
+
+A waitlist-stage app for people with meaningful personal goals whose clarity, time, energy, and confidence shift day to day. Users name a direction (goals), show up through small habits and tasks, and adapt when life changes. Rest and skips are built into the system.
+
+## What DamnGoal is not
+
+Not a streak app. Not aggressive gamification. Not clinical mental health treatment. Not a coach that cheerleads or diagnoses.
+
+## Key differentiators
+
+- Connection over completion
+- Energy check-in (Good / Low / Rough) right-sizes Today
+- Lighter versions on hard days
+- Goals can be reached or released without shame
+- AI companion when you want it — reflects and asks, never pushes
+
+## Contact / waitlist
+
+Join the waitlist at https://damngoal.app/#waitlist

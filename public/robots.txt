@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /blog/
+Disallow: /about
+
+Sitemap: https://damngoal.app/sitemap-index.xml

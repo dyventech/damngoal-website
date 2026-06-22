@@ -1,0 +1,136 @@
+---
+interface Props {
+	id?: string;
+	variant?: 'default' | 'dark';
+	hint?: string;
+}
+
+const { id, variant = 'default', hint = 'Be first to know when we launch. No spam, ever.' } = Astro.props;
+
+const formId = id ?? 'hero';
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+const turnstileEnabled = Boolean(siteKey);
+---
+
+<div class={`waitlist-form-wrap${variant === 'dark' ? ' waitlist-form-wrap--dark' : ''}`} id={id}>
+	<form class="waitlist-form" data-waitlist-form data-turnstile={turnstileEnabled ? 'true' : 'false'}>
+		<div class="waitlist-form__row">
+			<label for={`email-${formId}`} class="sr-only">Email address</label>
+			<input
+				type="email"
+				id={`email-${formId}`}
+				name="email"
+				class="waitlist-form__input"
+				placeholder="you@email.com"
+				required
+				autocomplete="email"
+			/>
+			<button type="submit" class="waitlist-form__submit">Join waitlist</button>
+		</div>
+		{turnstileEnabled && (
+			<div
+				class="waitlist-form__turnstile cf-turnstile"
+				data-sitekey={siteKey}
+				data-theme={variant === 'dark' ? 'dark' : 'light'}
+			/>
+		)}
+		<p class="waitlist-form__hint">{hint}</p>
+		<p class="waitlist-form__message" data-waitlist-message hidden></p>
+	</form>
+</div>
+
+<script>
+	declare global {
+		interface Window {
+			turnstile?: {
+				reset: (widget?: HTMLElement) => void;
+			};
+		}
+	}
+
+	document.querySelectorAll<HTMLFormElement>('[data-waitlist-form]').forEach((form) => {
+		const messageEl = form.querySelector<HTMLParagraphElement>('[data-waitlist-message]');
+		const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+		const emailInput = form.querySelector<HTMLInputElement>('input[type="email"]');
+		const turnstileRequired = form.dataset.turnstile === 'true';
+		const turnstileWidget = form.querySelector<HTMLElement>('.cf-turnstile');
+
+		const resetTurnstile = () => {
+			if (turnstileWidget && window.turnstile) {
+				window.turnstile.reset(turnstileWidget);
+			}
+		};
+
+		form.addEventListener('submit', async (e) => {
+			e.preventDefault();
+			if (!emailInput || !submitBtn || !messageEl) return;
+
+			const email = emailInput.value.trim();
+			if (!email) return;
+
+			const turnstileToken = form.querySelector<HTMLInputElement>(
+				'input[name="cf-turnstile-response"]',
+			)?.value;
+
+			if (turnstileRequired && !turnstileToken) {
+				messageEl.textContent = 'Please complete the verification check.';
+				messageEl.className = 'waitlist-form__message waitlist-form__message--error';
+				messageEl.hidden = false;
+				return;
+			}
+
+			submitBtn.disabled = true;
+			messageEl.hidden = true;
+			messageEl.className = 'waitlist-form__message';
+
+			try {
+				const res = await fetch('/api/waitlist', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						email,
+						turnstileToken: turnstileToken || undefined,
+					}),
+				});
+
+				const data = (await res.json()) as { message?: string; error?: string };
+
+				if (res.ok) {
+					messageEl.textContent = data.message ?? "You're on the list. We'll be in touch.";
+					messageEl.classList.add('waitlist-form__message--success');
+					form.reset();
+					resetTurnstile();
+				} else {
+					messageEl.textContent = data.error ?? 'Something went wrong. Please try again.';
+					messageEl.classList.add('waitlist-form__message--error');
+					resetTurnstile();
+				}
+			} catch {
+				messageEl.textContent = 'Connection error. Please try again.';
+				messageEl.classList.add('waitlist-form__message--error');
+				resetTurnstile();
+			}
+
+			messageEl.hidden = false;
+			submitBtn.disabled = false;
+		});
+	});
+</script>
+
+<style>
+	.waitlist-form__turnstile {
+		margin-top: 0.25rem;
+	}
+
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+</style>

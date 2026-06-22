@@ -1,47 +1,103 @@
 ---
-// Import the global.css file here so that it is included on
-// all pages through the use of the <BaseHead /> component.
-import '../styles/global.css';
+import { SEO } from 'astro-seo';
+import JsonLd from './seo/JsonLd.astro';
+import { SITE_TITLE } from '../consts';
 
 interface Props {
 	title: string;
 	description: string;
 	image?: string;
+	landing?: boolean;
+	noindex?: boolean;
+	jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
+const {
+	title,
+	description,
+	image = '/damngoal-logo.jpeg',
+	landing = false,
+	noindex = false,
+	jsonLd,
+} = Astro.props;
+
+const ogImage = image.startsWith('http') ? image : new URL(image, Astro.site).href;
+const canonical = canonicalURL.href;
+
+if (!landing) {
+	await import('../styles/global.css');
+}
 ---
 
-<!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="generator" content={Astro.generator} />
+<meta name="theme-color" content="#18233F" />
 
-<!-- Font preloads -->
-<link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
-<link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin />
+<SEO
+	title={title}
+	description={description}
+	canonical={canonical}
+	noindex={noindex}
+	nofollow={noindex}
+	openGraph={{
+		basic: {
+			title,
+			type: 'website',
+			image: ogImage,
+			url: canonical,
+		},
+		optional: {
+			description,
+			siteName: SITE_TITLE,
+			locale: 'en_US',
+		},
+		image: {
+			alt: `${SITE_TITLE} — ${description}`,
+		},
+	}}
+	twitter={{
+		card: 'summary_large_image',
+		title,
+		description,
+		image: ogImage,
+		imageAlt: `${SITE_TITLE} logo`,
+	}}
+	extend={{
+		link: [
+			{ rel: 'icon', type: 'image/jpeg', href: '/damngoal-logo.jpeg' },
+			{ rel: 'apple-touch-icon', href: '/damngoal-logo.jpeg' },
+			{ rel: 'alternate', type: 'text/plain', href: '/llms.txt', title: 'LLM site summary' },
+		],
+		meta: [
+			{ name: 'author', content: SITE_TITLE },
+			{ name: 'application-name', content: SITE_TITLE },
+			{
+				name: 'robots',
+				content: noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large',
+			},
+			{ property: 'og:locale', content: 'en_US' },
+		],
+	}}
+/>
 
-<!-- Canonical URL -->
-<link rel="canonical" href={canonicalURL} />
+{jsonLd && <JsonLd data={jsonLd} />}
 
-<!-- Primary Meta Tags -->
-<title>{title}</title>
-<meta name="title" content={title} />
-<meta name="description" content={description} />
-
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, Astro.url)} />
-
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image, Astro.url)} />
+{landing ? (
+	<>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+	</>
+) : (
+	<>
+		<link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
+		<link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin />
+	</>
+)}

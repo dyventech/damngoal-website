@@ -1,50 +1,284 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import LandingLayout from '../layouts/Landing.astro';
+import LandingHeader from '../components/landing/LandingHeader.astro';
+import LandingFooter from '../components/landing/LandingFooter.astro';
+import WaitlistForm from '../components/landing/WaitlistForm.astro';
+import TodayMock from '../components/landing/TodayMock.astro';
+import {
+	SITE_TITLE,
+	SITE_DESCRIPTION,
+	SITE_PRODUCT_LINE,
+	SITE_RALLY,
+	SITE_TAGLINE,
+	SITE_RESEARCH_LABEL,
+} from '../consts';
+import {
+	buildFaqSchema,
+	homeFaqs,
+	siteOrganization,
+	siteSoftwareApp,
+	siteWebSite,
+} from '../lib/seo';
+
+export const prerender = true;
+
+const seoTitle = `${SITE_TITLE} — ${SITE_TAGLINE}`;
+const seoDescription = `${SITE_PRODUCT_LINE} ${SITE_DESCRIPTION}`;
+
+const jsonLd = [
+	siteOrganization,
+	siteWebSite,
+	siteSoftwareApp,
+	buildFaqSchema(homeFaqs),
+];
+
+const journey = [
+	{
+		step: 'Goals',
+		phrase: 'Name the direction',
+		desc: 'Vague is fine — "more energy," "get back to drawing," "figure out my career." Most apps treat goals as projects with deadlines. DamnGoal treats them as relationships you can adjust, reach, or release.',
+		tone: 'lavender',
+	},
+	{
+		step: 'Habits',
+		phrase: 'Bridge to today',
+		desc: 'Small recurring actions, optionally linked to a goal. They stay small on purpose. You choose when one graduates — no 21-day badge, no streak threshold declaring you "formed."',
+		tone: 'cyan',
+	},
+	{
+		step: 'Tasks',
+		phrase: 'Handle the next steps',
+		desc: 'One-off actions for today or a future date. Done, partial, or skip — then off the list, kept in history. Not everything deserves to become a habit.',
+		tone: 'gold',
+	},
+];
+
+const contrasts = [
+	{
+		bad: 'Streaks, scores, and compliance %',
+		good: 'Awareness without grades — no leaderboards',
+	},
+	{
+		bad: 'A dashboard of overdue work',
+		good: 'Today, right-sized to how you feel',
+	},
+	{
+		bad: '"You got this!!!"',
+		good: 'A thoughtful friend who reflects and asks',
+	},
+	{
+		bad: 'Goals you quietly abandon',
+		good: 'Reach or release — on purpose, not failure',
+	},
+];
+
+const principles = [
+	{
+		size: 'large',
+		title: 'Connection over completion',
+		desc: 'Showing up a little on a rough day is real progress. Skip a day and nothing resets — skipping does not undo what came before.',
+		accent: 'celebration',
+	},
+	{
+		size: 'large',
+		title: 'Adapts to your energy',
+		desc: 'Good, Low, or Rough — context for today only, not a score. On hard days, items without a lighter version step aside. The app adapts dose to capacity, not willpower.',
+		accent: 'cyan',
+	},
+	{
+		size: 'small',
+		title: 'Rest is built in',
+		desc: 'Do Nothing Mode: a reset day with no guilt copy and no reminders until you come back.',
+		accent: 'lavender',
+	},
+	{
+		size: 'small',
+		title: 'AI when you want it',
+		desc: 'Help when you ask. Silence when you don\'t. Never cheerleads, diagnoses, or saves without your confirmation.',
+		accent: 'cyan',
+	},
+	{
+		size: 'small',
+		title: 'Goals can rest',
+		desc: 'Reached when you got what you came for. Released when it\'s not for you right now — neither is failure.',
+		accent: 'lavender',
+	},
+	{
+		size: 'small',
+		title: 'Growth without gamification',
+		desc: 'Path and Insights show patterns — not streak counts, red/green scores, or report cards.',
+		accent: 'gold',
+	},
+];
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<LandingLayout title={seoTitle} description={seoDescription} jsonLd={jsonLd}>
+	<LandingHeader />
+
+	<main class="landing-main">
+		<section class="hero">
+			<div class="hero__glow" aria-hidden="true"></div>
+			<div class="landing-container hero__grid">
+				<div class="hero__content">
+					<div class="hero__badges">
+						<span class="hero__eyebrow">Coming soon</span>
+						<a href="/research" class="hero__research-link">{SITE_RESEARCH_LABEL} →</a>
+					</div>
+					<h1 class="hero__title">
+						Keep the dream.
+						<span class="accent">Bend the plan.</span>
+					</h1>
+					<p class="hero__subtitle">{SITE_DESCRIPTION}</p>
+					<p class="hero__product-line">{SITE_PRODUCT_LINE}</p>
+					<p class="hero__rally">{SITE_RALLY}</p>
+					<WaitlistForm id="waitlist" />
+				</div>
+				<div class="hero__visual">
+					<div class="hero__logo-wrap">
+						<img
+							class="hero__logo"
+							src="/damngoal-logo.jpeg"
+							alt="DamnGoal — a lantern guiding your goals"
+							width="320"
+							height="320"
+						/>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div class="section-wave" aria-hidden="true">
+			<svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+				<path
+					d="M0 40 C360 80 720 0 1080 40 C1260 60 1380 50 1440 40 L1440 80 L0 80 Z"
+					fill="var(--soft-band)"></path>
+			</svg>
+		</div>
+
+		<section class="contrast reveal" aria-labelledby="contrast-heading">
+			<div class="landing-container contrast__layout">
+				<div class="contrast__intro">
+					<p class="contrast__eyebrow">Why DamnGoal exists</p>
+					<h2 class="contrast__title" id="contrast-heading">
+						Most apps assume you already have it <em>together</em>.
+					</h2>
+					<p class="contrast__lede">
+						Clear goals. Stable motivation. Predictable days. You name a direction, show up in
+						small ways, and adapt when energy or circumstances change. Rest counts. Skips count as
+						data, not failure.
+					</p>
+				</div>
+
+				<div class="contrast__table" role="list">
+					{contrasts.map((row) => (
+						<div class="contrast__row" role="listitem">
+							<div class="contrast__cell contrast__cell--old">
+								<span class="contrast__icon" aria-hidden="true">×</span>
+								<span>{row.bad}</span>
+							</div>
+							<div class="contrast__beam" aria-hidden="true"></div>
+							<div class="contrast__cell contrast__cell--new">
+								<span class="contrast__icon contrast__icon--yes" aria-hidden="true">✓</span>
+								<span>{row.good}</span>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section class="today-spotlight reveal" aria-labelledby="today-heading">
+			<div class="landing-container today-spotlight__grid">
+				<div class="today-spotlight__copy">
+					<p class="section-eyebrow">Your daily home</p>
+					<h2 class="today-spotlight__title" id="today-heading">
+						Today isn't overdue work — it's <span class="text-accent">one day</span>
+					</h2>
+					<p class="today-spotlight__desc">
+						Tap Low or Rough and pending items without a lighter version step aside — not to shame
+						you, but to keep you connected. Lighter versions stay. What you've already touched
+						today stays too.
+					</p>
+					<ul class="today-spotlight__notes">
+						<li>Energy check-in: context for today, not a personality type or score</li>
+						<li>Lighter versions: the same habit or task, smaller dose — not a separate item</li>
+						<li>Progress strip: how many items you've touched — not a streak</li>
+					</ul>
+				</div>
+				<div class="today-spotlight__device">
+					<div class="today-spotlight__glow" aria-hidden="true"></div>
+					<TodayMock energy="low" />
+				</div>
+			</div>
+		</section>
+
+		<section class="journey reveal" aria-labelledby="journey-heading">
+			<div class="landing-container">
+				<div class="journey__header">
+					<p class="section-eyebrow">The three layers</p>
+					<h2 class="journey__title" id="journey-heading">Long-term intention → what you do today</h2>
+					<p class="journey__desc">
+						Three things you can create. Together they connect where you're headed to how you show up
+						— and adapt when life does.
+					</p>
+				</div>
+
+				<ol class="journey__path">
+					{journey.map((item, i) => (
+						<li class={`journey__step journey__step--${item.tone}`}>
+							<div class="journey__node" aria-hidden="true">
+								<span class="journey__node-inner"></span>
+							</div>
+							<article class="journey__card">
+								<span class="journey__step-name">{item.step}</span>
+								<h3 class="journey__phrase">{item.phrase}</h3>
+								<p class="journey__text">{item.desc}</p>
+							</article>
+							{i < journey.length - 1 && <div class="journey__connector" aria-hidden="true"></div>}
+						</li>
+					))}
+				</ol>
+			</div>
+		</section>
+
+		<section class="principles reveal" aria-labelledby="principles-heading">
+			<div class="landing-container">
+				<div class="principles__header">
+					<p class="section-eyebrow">One system</p>
+					<h2 class="principles__title" id="principles-heading">
+						Not a collection of features — a way to stay connected
+					</h2>
+				</div>
+				<div class="principles__bento">
+					{principles.map((item) => (
+						<article class={`principle-card principle-card--${item.size} principle-card--${item.accent}`}>
+							<h3 class="principle-card__title">{item.title}</h3>
+							<p class="principle-card__desc">{item.desc}</p>
+						</article>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section class="cta-section reveal" aria-labelledby="cta-heading">
+			<div class="landing-container">
+				<div class="cta-section__card">
+					<div class="cta-section__lantern" aria-hidden="true">
+						<img src="/damngoal-logo.jpeg" alt="" width="64" height="64" />
+					</div>
+					<div class="cta-section__content">
+						<h2 class="cta-section__title" id="cta-heading">Be first in line</h2>
+						<p class="cta-section__desc">
+							DamnGoal doesn't fix you. It helps you keep the dream, bend the plan, and do it your
+							damn way — at a pace that actually fits your life. Join the waitlist and we'll let
+							you know when it's ready.
+						</p>
+						<WaitlistForm id="waitlist-bottom" variant="dark" />
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<LandingFooter />
+</LandingLayout>

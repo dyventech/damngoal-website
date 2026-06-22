@@ -1,0 +1,19 @@
+---
+import { SITE_TAGLINE } from '../../consts';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="landing-footer">
+	<div class="landing-container landing-footer__inner">
+		<div class="landing-footer__brand">
+			<img src="/damngoal-logo.jpeg" alt="" width="28" height="28" />
+			<span>DamnGoal</span>
+		</div>
+		<nav class="landing-footer__nav" aria-label="Footer">
+			<a href="/research">Research</a>
+		</nav>
+		<p class="landing-footer__tagline">{SITE_TAGLINE}</p>
+		<p class="landing-footer__copy">&copy; {year} DamnGoal. All rights reserved.</p>
+	</div>
+</footer>
