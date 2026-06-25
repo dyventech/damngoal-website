@@ -6,7 +6,7 @@ import {
 	SITE_URL,
 } from '../consts';
 
-export const defaultOgImage = `${SITE_URL}/damngoal-logo.jpeg`;
+export const defaultOgImage = `${SITE_URL}/damngoal-logo.png`;
 
 export const siteOrganization = {
 	'@context': 'https://schema.org',
