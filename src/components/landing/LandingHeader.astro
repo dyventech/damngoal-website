@@ -16,6 +16,12 @@ const currentPath = Astro.url.pathname;
 			>
 				Research
 			</a>
+			<a
+				href="/privacy"
+				class:list={['landing-header__link', { 'is-active': currentPath === '/privacy' }]}
+			>
+				Privacy
+			</a>
 		</nav>
 	</div>
 </header>

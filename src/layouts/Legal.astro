@@ -1,0 +1,34 @@
+---
+import LandingLayout from './Landing.astro';
+import LandingHeader from '../components/landing/LandingHeader.astro';
+import LandingFooter from '../components/landing/LandingFooter.astro';
+import { SITE_TITLE } from '../consts';
+import { buildWebPageSchema, siteOrganization } from '../lib/seo';
+
+interface Props {
+	title: string;
+	description: string;
+}
+
+const { title, description } = Astro.props;
+const pageTitle = title.includes(SITE_TITLE) ? title : `${title} — ${SITE_TITLE}`;
+
+const jsonLd = [
+	siteOrganization,
+	buildWebPageSchema({
+		title: pageTitle,
+		description,
+		path: Astro.url.pathname,
+	}),
+];
+---
+
+<LandingLayout title={pageTitle} description={description} jsonLd={jsonLd}>
+	<LandingHeader />
+	<main class="landing-main legal-page">
+		<article class="legal-prose landing-container">
+			<slot />
+		</article>
+	</main>
+	<LandingFooter />
+</LandingLayout>
