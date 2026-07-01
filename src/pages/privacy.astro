@@ -1,33 +1,32 @@
 ---
-import LandingLayout from './Landing.astro';
+import LandingLayout from '../layouts/Landing.astro';
 import LandingHeader from '../components/landing/LandingHeader.astro';
 import LandingFooter from '../components/landing/LandingFooter.astro';
+import { Content } from '../content/privacy-policy.md';
 import { SITE_TITLE } from '../consts';
 import { buildWebPageSchema, siteOrganization } from '../lib/seo';
 
-interface Props {
-	title: string;
-	description: string;
-}
+export const prerender = true;
 
-const { title, description } = Astro.props;
-const pageTitle = title.includes(SITE_TITLE) ? title : `${title} — ${SITE_TITLE}`;
+const pageTitle = `Privacy Policy — ${SITE_TITLE}`;
+const pageDescription =
+	'How DamnGoal collects, uses, discloses, and protects your information when you use our app and website.';
 
 const jsonLd = [
 	siteOrganization,
 	buildWebPageSchema({
 		title: pageTitle,
-		description,
-		path: Astro.url.pathname,
+		description: pageDescription,
+		path: '/privacy',
 	}),
 ];
 ---
 
-<LandingLayout title={pageTitle} description={description} jsonLd={jsonLd}>
+<LandingLayout title={pageTitle} description={pageDescription} jsonLd={jsonLd}>
 	<LandingHeader />
 	<main class="landing-main legal-page">
 		<article class="legal-prose landing-container">
-			<slot />
+			<Content />
 		</article>
 	</main>
 	<LandingFooter />

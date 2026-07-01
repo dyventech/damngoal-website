@@ -1,9 +1,3 @@
----
-layout: ../layouts/Legal.astro
-title: Privacy Policy
-description: How DamnGoal collects, uses, discloses, and protects your information when you use our app and website.
----
-
 # Privacy Policy
 
 **Effective date:** July 1, 2026  

@@ -1455,7 +1455,7 @@ a.research-finding__source:hover {
 	max-width: 46rem;
 }
 
-.legal-prose :global(h1) {
+.legal-prose h1 {
 	margin: 0 0 1rem;
 	font-family: var(--font-display);
 	font-size: clamp(2rem, 4vw, 2.75rem);
@@ -1464,7 +1464,7 @@ a.research-finding__source:hover {
 	letter-spacing: -0.03em;
 }
 
-.legal-prose :global(h2) {
+.legal-prose h2 {
 	margin: 2.5rem 0 1rem;
 	font-family: var(--font-display);
 	font-size: clamp(1.25rem, 2.5vw, 1.5rem);
@@ -1472,29 +1472,29 @@ a.research-finding__source:hover {
 	letter-spacing: -0.02em;
 }
 
-.legal-prose :global(h3) {
+.legal-prose h3 {
 	margin: 1.75rem 0 0.75rem;
 	font-family: var(--font-display);
 	font-size: 1.0625rem;
 	font-weight: 600;
 }
 
-.legal-prose :global(p),
-.legal-prose :global(li) {
+.legal-prose p,
+.legal-prose li {
 	color: var(--text-muted);
 	line-height: 1.7;
 }
 
-.legal-prose :global(p) {
+.legal-prose p {
 	margin: 0 0 1rem;
 }
 
-.legal-prose :global(strong) {
+.legal-prose strong {
 	color: var(--brand);
 	font-weight: 600;
 }
 
-.legal-prose :global(a) {
+.legal-prose a {
 	color: var(--brand);
 	font-weight: 500;
 	text-decoration: underline;
@@ -1503,68 +1503,62 @@ a.research-finding__source:hover {
 	transition: text-decoration-color 0.2s ease;
 }
 
-.legal-prose :global(a:hover) {
+.legal-prose a:hover {
 	text-decoration-color: var(--accent);
 }
 
-.legal-prose :global(hr) {
+.legal-prose hr {
 	margin: 2rem 0;
 	border: 0;
 	border-top: 1px solid rgba(24, 35, 63, 0.1);
 }
 
-.legal-prose :global(ul) {
+.legal-prose ul {
 	margin: 0 0 1rem;
 	padding-left: 1.25rem;
 }
 
-.legal-prose :global(li) {
+.legal-prose li {
 	margin-bottom: 0.35rem;
 }
 
-.legal-prose :global(table) {
+.legal-prose table {
 	width: 100%;
 	margin: 0 0 1.5rem;
 	border-collapse: collapse;
 	font-size: 0.9375rem;
 }
 
-.legal-prose :global(th),
-.legal-prose :global(td) {
+.legal-prose th,
+.legal-prose td {
 	padding: 0.75rem 1rem;
 	text-align: left;
 	vertical-align: top;
 	border: 1px solid rgba(24, 35, 63, 0.1);
 }
 
-.legal-prose :global(th) {
+.legal-prose th {
 	font-weight: 600;
 	color: var(--brand);
 	background: rgba(217, 214, 255, 0.25);
 }
 
-.legal-prose :global(td) {
+.legal-prose td {
 	background: var(--white);
 }
 
-.legal-prose :global(em) {
+.legal-prose em {
 	font-size: 0.875rem;
 	color: var(--text-soft);
 }
 
-.legal-prose :global(.table-wrapper) {
-	overflow-x: auto;
-	margin: 0 0 1.5rem;
-	-webkit-overflow-scrolling: touch;
-}
-
 @media (max-width: 640px) {
-	.legal-prose :global(table) {
+	.legal-prose table {
 		font-size: 0.8125rem;
 	}
 
-	.legal-prose :global(th),
-	.legal-prose :global(td) {
+	.legal-prose th,
+	.legal-prose td {
 		padding: 0.5rem 0.625rem;
 	}
 }
